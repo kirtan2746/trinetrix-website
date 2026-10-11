@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 840 190" role="img" aria-labelledby="title desc">
+  <title id="title">Vilartech — Powered by Trinetrix</title>
+  <desc id="desc">Minimal geometric V mark combining a creative angled stroke and a connected technology node, followed by a slate and emerald wordmark.</desc>
+  <!-- Transparent background; clean, flat vector identity -->
+  <g transform="translate(14 20)">
+    <!-- Two complementary strokes: creative craft and engineered precision -->
+    <path d="M18 19 L69 124 Q73 133 78 124 L127 19" fill="none" stroke="#172B29" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M78 124 L127 19" fill="none" stroke="#087F5B" stroke-width="17" stroke-linecap="round"/>
+    <!-- Connected node: insight, digital solutions, forward progress -->
+    <circle cx="127" cy="19" r="8.5" fill="#087F5B"/>
+    <circle cx="143" cy="9" r="4" fill="#9ED9B8"/>
+  </g>
+  <g font-family="Manrope, Inter, 'Segoe UI', Arial, sans-serif">
+    <text x="187" y="106" font-size="72" font-weight="750" letter-spacing="-3.3" fill="#172B29">Vilar<tspan fill="#087F5B">tech</tspan></text>
+    <text x="191" y="143" font-size="15" font-weight="650" letter-spacing="3.5" fill="#657A73">POWERED BY TRINETRIX</text>
+  </g>
+</svg>
