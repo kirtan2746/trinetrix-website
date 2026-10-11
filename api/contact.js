@@ -5,7 +5,7 @@ const recipient = "kirtan.gohel@vilartech.com.au";
 
 // Use the exact domain verified in your Resend account.
 // Change this if you verified vilartech.com.au instead.
-const sender = "Vilartech Enquiries <notifications@mail.vilartech.com.au>";
+const sender = "Vilartech Enquiries <notifications@vilartech.com.au>";
 
 const escapeHtml = (value) =>
   String(value).replace(/[&<>"']/g, (char) => {
