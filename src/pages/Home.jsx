@@ -1,50 +1,126 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
   ArrowUpRight,
+  Globe2,
+  MonitorSmartphone,
+  Network,
+  Palette,
+  BarChart3,
+  Workflow,
   Sparkles,
-  Check,
   Layers3,
-  MousePointer2,
-  MoveUpRight,
   PenTool,
   Code2,
-  Zap,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   Compass,
   Lightbulb,
   Rocket,
+  Zap,
 } from "lucide-react";
 
-import { services } from "../data/servicesData";
+// Six updated services for the homepage.
+// We will update servicesData.js when redesigning the Services page.
+const offerings = [
+  {
+    title: "Website Design & Development",
+    desc:
+      "Professional websites, online stores and website redesigns that look great on every device, build trust and help customers find your business.",
+    icon: MonitorSmartphone,
+    tags: ["Business Websites", "Online Stores", "Website Care"],
+  },
+  {
+    title: "Business Online Setup & Microsoft 365",
+    desc:
+      "Get your business online with domain registration, website hosting, professional email addresses, Google Business Profile and Microsoft 365.",
+    icon: Globe2,
+    tags: ["Domains & Hosting", "Business Email", "Microsoft 365"],
+  },
+  {
+    title: "Business IT Setup & Support",
+    desc:
+      "Set up the essential technology for your shop, startup or office, including computers, printers, Wi-Fi, networks, servers and communication tools.",
+    icon: Network,
+    tags: ["Computers & Printers", "Networks", "IT Support"],
+  },
+  {
+    title: "Branding, Graphic Design & Digital Marketing",
+    desc:
+      "Create a memorable business identity with logos, banners, marketing materials, social media graphics and SEO support to reach more customers.",
+    icon: Palette,
+    tags: ["Logo Design", "Marketing Graphics", "SEO"],
+  },
+  {
+    title: "Data Analytics & Business Intelligence",
+    desc:
+      "Turn your spreadsheets and business data into meaningful insights using Power BI dashboards, KPI reports and structured data solutions.",
+    icon: BarChart3,
+    tags: ["Power BI", "KPI Dashboards", "Data Reporting"],
+  },
+  {
+    title: "Business Automation & Digital Workplaces",
+    desc:
+      "Make everyday work easier with SharePoint intranets, Power Apps, automated workflows and connected systems that help your team work smarter.",
+    icon: Workflow,
+    tags: ["SharePoint", "Power Automate", "Power Apps"],
+  },
+];
+
+const studioSlides = [
+  {
+    eyebrow: "IMAGINE. DESIGN. BUILD.",
+    first: "Ideas made",
+    second: "tangible.",
+    icon: Layers3,
+    chips: ["Identity", "Experience", "Innovation"],
+    note: "From the first sketch to the finished experience.",
+  },
+  {
+    eyebrow: "YOUR BUSINESS. ONLINE.",
+    first: "Digital that",
+    second: "works for you.",
+    icon: Code2,
+    chips: ["Websites", "Cloud", "Support"],
+    note: "Practical technology, thoughtfully delivered.",
+  },
+  {
+    eyebrow: "CLARITY. CONNECTION. GROWTH.",
+    first: "Smarter ways",
+    second: "to grow.",
+    icon: BarChart3,
+    chips: ["Insights", "Automation", "Progress"],
+    note: "Make your next move with confidence.",
+  },
+];
 
 const strengths = [
   {
     icon: Lightbulb,
     title: "We see the bigger picture.",
     description:
-      "A memorable brand, a thoughtful website and an effective digital system should work together. We connect those pieces with clarity and purpose.",
-    featured: true,
+      "Your website, brand and technology should work together. We help connect the pieces into one practical digital experience.",
   },
   {
     icon: Compass,
-    title: "Thoughtful from the start.",
+    title: "Built around your business.",
     description:
-      "Every decision begins with understanding the people, purpose and goals behind the project.",
+      "We understand your goals before recommending solutions, keeping things simple, useful and relevant.",
   },
   {
     icon: Layers3,
-    title: "Creativity meets capability.",
+    title: "Creativity meets technology.",
     description:
-      "We bring visual thinking and practical technology together to create solutions that work beautifully.",
+      "We combine thoughtful design with technical expertise to create solutions that look good and work reliably.",
   },
   {
     icon: Zap,
     title: "Ready for what's next.",
     description:
-      "We create flexible digital foundations that can evolve alongside your customers, ideas and ambitions.",
-    featured: true,
+      "From your first business website to smarter workplace systems, we help you build foundations that can grow.",
   },
 ];
 
@@ -54,43 +130,77 @@ const processSteps = [
     icon: Compass,
     title: "Discover",
     description:
-      "We listen, ask the right questions and understand what success should look like for your business.",
+      "We learn about your business, your challenges and what you want to achieve.",
   },
   {
     number: "02",
     icon: PenTool,
-    title: "Create",
+    title: "Design & Build",
     description:
-      "We shape thoughtful designs, functional solutions and connected digital experiences around your goals.",
+      "We plan and create a practical solution tailored to your business needs.",
   },
   {
     number: "03",
     icon: Rocket,
-    title: "Evolve",
+    title: "Launch & Support",
     description:
-      "We refine the experience, support your launch and explore opportunities for continued improvement.",
+      "We help you launch, improve and maintain your digital solution as your business evolves.",
   },
 ];
 
+const raised =
+  "shadow-[9px_9px_24px_#dce9e2,-9px_-9px_24px_#ffffff]";
+
 export default function Home() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+
+    const interval = window.setInterval(() => {
+      setActive((previous) => (previous + 1) % studioSlides.length);
+    }, 4000);
+
+    return () => window.clearInterval(interval);
+  }, [paused]);
+
+  const slide = studioSlides[active];
+  const SlideIcon = slide.icon;
+
+  const nextSlide = () => {
+    setActive((previous) => (previous + 1) % studioSlides.length);
+  };
+
+  const previousSlide = () => {
+    setActive(
+      (previous) =>
+        (previous - 1 + studioSlides.length) % studioSlides.length
+    );
+  };
+
   return (
     <main className="overflow-hidden bg-[#F5FAF7] text-[#172B29]">
 
-      {/* HERO */}
-      <section className="relative isolate overflow-hidden">
-        <div className="pointer-events-none absolute -right-36 -top-48 h-[500px] w-[500px] rounded-full bg-[#9ED9B8]/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 -left-40 h-[420px] w-[420px] rounded-full bg-[#DDEFE2]/60 blur-3xl" />
+      {/* HERO SECTION */}
+      <section className="relative isolate overflow-hidden border-b border-[#e1eee6] px-6 py-20 sm:py-24 lg:py-28">
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-6 pb-20 pt-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12 lg:pb-28 lg:pt-28">
+        {/* Background effects */}
+        <div className="pointer-events-none absolute -right-28 -top-40 h-[550px] w-[550px] rounded-full bg-[#d9f1e4]/70 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-56 -left-40 h-[480px] w-[480px] rounded-full bg-white blur-3xl" />
 
-          {/* HERO COPY */}
-          <div className="relative z-10">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#DDEAE2] bg-white px-4 py-2 text-xs font-bold tracking-[0.08em] text-[#087F5B] shadow-sm">
-              <Sparkles size={15} />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.08fr_0.92fr]">
+
+          {/* HERO LEFT */}
+          <div>
+            <span
+              className={`inline-flex items-center gap-2 rounded-full border border-[#dcebe2] bg-[#f6fbf8] px-5 py-3 text-xs font-extrabold tracking-[0.13em] text-[#087F5B] ${raised}`}
+            >
+              <Sparkles size={16} />
               A CREATIVE & DIGITAL STUDIO
-            </div>
+            </span>
 
-            <h1 className="max-w-3xl text-[clamp(3.2rem,6vw,5.8rem)] font-extrabold leading-[1.05] tracking-[-0.065em]">
+            <h1 className="mt-12 max-w-3xl text-[clamp(3.5rem,6.5vw,6.6rem)] font-black leading-[1.06] tracking-[-0.075em]">
               Good ideas
               <span className="block">deserve great</span>
               <span className="block text-[#087F5B]">
@@ -98,277 +208,305 @@ export default function Home() {
               </span>
             </h1>
 
-            <p className="mt-8 max-w-xl text-lg leading-8 text-[#657A73]">
-              We bring design, creativity and technology
-              together to shape brands, build digital
-              experiences and make ambitious ideas work
-              in the real world.
+            <p className="mt-9 max-w-2xl text-lg leading-9 text-[#627b71] sm:text-xl">
+              We bring creativity and technology together to help
+              businesses build a strong brand, get online and work
+              smarter — from the first idea to the finished solution.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-11 flex flex-wrap gap-4">
               <Link
                 to="/services"
-                className="group inline-flex items-center gap-2 rounded-full bg-[#087F5B] px-7 py-4 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#066B4D] hover:shadow-lg"
+                className="inline-flex items-center gap-3 rounded-full bg-[#087F5B] px-8 py-5 text-sm font-bold text-white shadow-lg shadow-[#087F5B]/15 transition-all duration-300 hover:-translate-y-1 hover:bg-[#066a4c]"
               >
-                Explore What We Do
-                <ArrowUpRight
-                  size={18}
-                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
+                Explore Our Services
+                <ArrowUpRight size={19} />
               </Link>
 
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full border border-[#D0E3D7] bg-white px-7 py-4 text-sm font-bold text-[#172B29] transition-colors hover:border-[#087F5B] hover:text-[#087F5B]"
+                className={`inline-flex items-center gap-3 rounded-full border border-[#d4e6db] bg-[#f8fcf9] px-8 py-5 text-sm font-bold transition-all duration-300 hover:-translate-y-1 ${raised}`}
               >
                 Let's Talk
-                <ArrowRight size={18} />
+                <ArrowRight size={19} />
               </Link>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[#DDEAE2] pt-7">
-              {[
-                "Thoughtful design",
-                "Smart technology",
-                "Practical outcomes",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="flex items-center gap-2 text-sm font-medium text-[#657A73]"
-                >
-                  <Check
-                    size={17}
-                    className="text-[#087F5B]"
-                  />
-                  {item}
-                </span>
-              ))}
+            <div className="mt-10 flex items-center gap-3 text-sm font-medium text-[#668276]">
+              <CheckCircle2 size={19} className="shrink-0 text-[#087F5B]" />
+              Creative thinking. Practical solutions. Personal service.
             </div>
           </div>
 
-          {/* HERO VISUAL */}
-          <div className="relative mx-auto w-full max-w-[540px]">
-            <div className="relative rounded-[36px] border border-[#DDEAE2] bg-white p-5 shadow-[0_30px_80px_rgba(23,43,41,0.08)] sm:p-7">
-
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#9ED9B8]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#DDEAE2]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#DDEAE2]" />
-                </div>
-
-                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#657A73] sm:text-[11px]">
-                  The Vilartech Studio
-                </span>
+          {/* HERO RIGHT - NEOMORPHIC CAROUSEL */}
+          <div
+            className={`relative rounded-[38px] border border-white bg-[#f5faf7] p-5 sm:p-8 ${raised}`}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onFocusCapture={() => setPaused(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setPaused(false);
+              }
+            }}
+          >
+            {/* Three interactive dots */}
+            <div className="mb-6 flex items-center justify-between gap-3 px-2">
+              <div className="flex items-center gap-2">
+                {studioSlides.map((item, index) => (
+                  <button
+                    key={item.eyebrow}
+                    type="button"
+                    onClick={() => setActive(index)}
+                    aria-label={`Show studio slide ${index + 1}`}
+                    aria-pressed={index === active}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      index === active
+                        ? "w-9 bg-[#087F5B]"
+                        : "w-3 bg-[#d5e5dc] hover:bg-[#9dd7b8]"
+                    }`}
+                  />
+                ))}
               </div>
 
-              <div className="rounded-[26px] bg-[#172B29] p-7 text-white sm:p-9">
-                <div className="flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
-                    <Layers3
-                      size={22}
-                      className="text-[#9ED9B8]"
-                    />
-                  </div>
+              <span className="text-[10px] font-extrabold tracking-[0.18em] text-[#6a8277] sm:text-xs">
+                THE VILARTECH STUDIO
+              </span>
+            </div>
 
-                  <MoveUpRight
-                    size={21}
-                    className="text-[#9ED9B8]"
-                  />
+            {/* Rotating card */}
+            <div className="relative min-h-[420px] overflow-hidden rounded-[32px] bg-[#172B29] p-8 text-white shadow-[inset_5px_5px_15px_#0b1a18,inset_-4px_-4px_14px_#24403a] sm:min-h-[460px] sm:p-11">
+
+              <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-[#087F5B]/30 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-[#9ED9B8]/10 blur-3xl" />
+
+              <div className="relative flex items-center justify-between">
+                <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-[#9ED9B8] shadow-[4px_5px_14px_#071715]">
+                  <SlideIcon size={27} />
                 </div>
 
-                <p className="mt-12 text-xs font-bold uppercase tracking-[0.2em] text-[#9ED9B8]">
-                  Imagine. Design. Build.
+                <ArrowUpRight
+                  size={24}
+                  className="text-[#9ED9B8]"
+                />
+              </div>
+
+              <div
+                key={active}
+                className="relative mt-16 animate-[fadeIn_0.55s_ease-out]"
+              >
+                <p className="text-xs font-extrabold tracking-[0.22em] text-[#9ED9B8] sm:text-sm">
+                  {slide.eyebrow}
                 </p>
 
-                <h2 className="mt-4 max-w-xs text-4xl font-extrabold leading-[1.08] tracking-[-0.05em] sm:text-5xl">
-                  Ideas made
+                <h2 className="mt-7 text-[clamp(2.5rem,4vw,4.2rem)] font-black leading-[1.08] tracking-[-0.06em]">
+                  {slide.first}
                   <span className="block text-[#9ED9B8]">
-                    tangible.
+                    {slide.second}
                   </span>
                 </h2>
 
-                <div className="mt-10 flex flex-wrap gap-2">
-                  {[
-                    "Identity",
-                    "Experience",
-                    "Innovation",
-                  ].map((tag) => (
+                <p className="mt-5 text-sm leading-7 text-white/65">
+                  {slide.note}
+                </p>
+
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {slide.chips.map((chip) => (
                     <span
-                      key={tag}
-                      className="rounded-full border border-white/20 px-3 py-1.5 text-[11px] font-semibold text-white/80"
+                      key={chip}
+                      className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold text-white/85"
                     >
-                      {tag}
+                      {chip}
                     </span>
                   ))}
                 </div>
               </div>
+            </div>
 
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4">
-                <div className="rounded-[22px] bg-[#E8F5ED] p-4 sm:p-5">
-                  <PenTool
-                    size={23}
-                    className="text-[#087F5B]"
-                  />
+            {/* Bottom mini cards */}
+            <div className="mt-5 grid grid-cols-2 gap-4">
+              <div className="rounded-[24px] bg-[#e8f5ed] p-5 shadow-[inset_3px_3px_8px_#d3e8db,inset_-3px_-3px_8px_#ffffff] sm:p-6">
+                <PenTool
+                  size={25}
+                  className="text-[#087F5B]"
+                />
+                <h3 className="mt-7 font-extrabold">
+                  Creative by nature.
+                </h3>
+                <p className="mt-1 text-sm text-[#668276]">
+                  Design with purpose.
+                </p>
+              </div>
 
-                  <p className="mt-8 text-sm font-bold">
-                    Creative by nature.
-                  </p>
-
-                  <p className="mt-1 text-xs leading-5 text-[#657A73]">
-                    Design with purpose.
-                  </p>
-                </div>
-
-                <div className="rounded-[22px] border border-[#DDEAE2] bg-[#F5FAF7] p-4 sm:p-5">
-                  <Code2
-                    size={23}
-                    className="text-[#087F5B]"
-                  />
-
-                  <p className="mt-8 text-sm font-bold">
-                    Digital by design.
-                  </p>
-
-                  <p className="mt-1 text-xs leading-5 text-[#657A73]">
-                    Built to work beautifully.
-                  </p>
-                </div>
+              <div className="rounded-[24px] bg-[#f5faf7] p-5 shadow-[inset_3px_3px_8px_#dbe8e0,inset_-3px_-3px_8px_#ffffff] sm:p-6">
+                <Code2
+                  size={25}
+                  className="text-[#087F5B]"
+                />
+                <h3 className="mt-7 font-extrabold">
+                  Digital by design.
+                </h3>
+                <p className="mt-1 text-sm text-[#668276]">
+                  Built to work beautifully.
+                </p>
               </div>
             </div>
 
-            <div className="absolute -bottom-5 -left-4 hidden items-center gap-3 rounded-2xl border border-[#DDEAE2] bg-white px-5 py-4 shadow-xl sm:flex">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E8F5ED]">
-                <MousePointer2
-                  size={20}
-                  className="text-[#087F5B]"
-                />
-              </div>
+            {/* Carousel controls */}
+            <div className="mt-5 flex justify-end gap-2">
+              <button
+                type="button"
+                aria-label="Previous studio slide"
+                onClick={previousSlide}
+                className="rounded-full bg-white p-3 text-[#087F5B] shadow-sm transition-colors hover:bg-[#e8f5ed]"
+              >
+                <ChevronLeft size={18} />
+              </button>
 
-              <div>
-                <p className="text-xs font-bold">
-                  Designed for people
-                </p>
-                <p className="text-[11px] text-[#657A73]">
-                  Built for possibility
-                </p>
-              </div>
+              <button
+                type="button"
+                aria-label="Next studio slide"
+                onClick={nextSlide}
+                className="rounded-full bg-white p-3 text-[#087F5B] shadow-sm transition-colors hover:bg-[#e8f5ed]"
+              >
+                <ChevronRight size={18} />
+              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* BRAND STATEMENT */}
-      <section className="border-y border-[#DDEAE2] bg-white">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6 px-6 py-9">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#087F5B]">
+      <section className="border-b border-[#e1eee6] bg-white px-6 py-10">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 md:flex-row md:items-center">
+          <p className="shrink-0 text-xs font-extrabold uppercase tracking-[0.18em] text-[#087F5B]">
             The Vilartech Perspective
           </p>
 
-          <p className="max-w-2xl text-lg font-semibold leading-8 tracking-tight sm:text-xl">
-            We believe the best digital experiences happen
-            when creativity and technology move in the
-            same direction.
+          <p className="max-w-2xl text-lg font-semibold leading-8">
+            Great digital experiences happen when creativity,
+            technology and real business needs work together.
           </p>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      {/* ABOUT US - BEFORE SERVICES */}
+      <section className="bg-white px-6 py-24 sm:py-28">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F5B]">
+              Get To Know Us
+            </p>
 
-          <div className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <div className="max-w-3xl">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F5B]">
-                Our Expertise
-              </p>
+            <h2 className="mt-5 text-4xl font-black leading-tight tracking-[-0.055em] sm:text-5xl">
+              Creative ideas.
+              <span className="block text-[#087F5B]">
+                Real-world results.
+              </span>
+            </h2>
+          </div>
 
-              <h2 className="mt-5 text-4xl font-extrabold leading-tight tracking-[-0.045em] sm:text-5xl">
-                Different disciplines.
+          <div className="rounded-[30px] border border-[#e1eee6] bg-[#F5FAF7] p-8 shadow-[8px_8px_22px_#e0eae4,-8px_-8px_22px_#ffffff] sm:p-10">
+            <p className="text-lg leading-9 text-[#627b71]">
+              Vilartech, powered by Trinetrix, brings design,
+              digital tools and practical IT expertise together.
+              We help startups and small businesses establish
+              their online presence, strengthen their identity
+              and make everyday technology easier to manage.
+            </p>
+
+            <Link
+              to="/about"
+              className="mt-7 inline-flex items-center gap-2 font-bold text-[#087F5B] transition-all hover:gap-4"
+            >
+              Discover Our Story
+              <ArrowUpRight size={19} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SIX SERVICES */}
+      <section
+        id="services"
+        className="bg-[#F5FAF7] px-6 py-24 sm:py-28"
+      >
+        <div className="mx-auto max-w-7xl">
+
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F5B]">
+            How We Can Help
+          </p>
+
+          <div className="mt-4 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h2 className="text-4xl font-black leading-tight tracking-[-0.055em] sm:text-5xl">
+                Everything your business needs
                 <span className="block text-[#087F5B]">
-                  One creative vision.
+                  to look good and work smarter.
                 </span>
               </h2>
 
-              <p className="mt-6 max-w-2xl text-base leading-8 text-[#657A73]">
-                From shaping your identity to building the
-                digital tools behind your business, we bring
-                together the right ideas and expertise for
-                every stage of growth.
+              <p className="mt-6 max-w-2xl text-base leading-8 text-[#627b71]">
+                From your first website and business email
+                to IT support, branding, data insights and
+                automation — practical services to help your
+                business grow.
               </p>
             </div>
 
             <Link
               to="/services"
-              className="inline-flex shrink-0 items-center gap-2 text-sm font-bold text-[#087F5B] transition-colors hover:text-[#066B4D]"
+              className="inline-flex items-center gap-2 font-bold text-[#087F5B] hover:text-[#066a4c]"
             >
               View All Services
               <ArrowUpRight size={19} />
             </Link>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              const featured = index === 0;
+          <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+            {offerings.map((item, index) => {
+              const Icon = item.icon;
 
               return (
                 <Link
-                  key={service.slug}
-                  to={`/services/${service.slug}`}
-                  className={`group flex min-h-[290px] flex-col justify-between rounded-[28px] border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,43,41,0.08)] sm:p-8 ${
-                    featured
-                      ? "border-[#087F5B] bg-[#087F5B] text-white"
-                      : "border-[#DDEAE2] bg-[#FAFCFB] text-[#172B29] hover:border-[#9ED9B8]"
-                  }`}
+                  to="/services"
+                  key={item.title}
+                  className={`group flex min-h-[370px] flex-col rounded-[30px] border border-[#e0ede5] bg-[#f5faf7] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-[#b6dbc7] hover:shadow-[13px_13px_30px_#dce9e2,-13px_-13px_30px_#ffffff] ${raised}`}
                 >
-                  <div>
-                    <div className="flex items-start justify-between">
-                      <div
-                        className={`flex h-14 w-14 items-center justify-center rounded-2xl ${
-                          featured
-                            ? "bg-white/15 text-white"
-                            : "bg-[#E8F5ED] text-[#087F5B]"
-                        }`}
-                      >
-                        <Icon
-                          size={25}
-                          strokeWidth={1.8}
-                        />
-                      </div>
-
-                      <ArrowUpRight
-                        size={20}
-                        className="opacity-60 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-                      />
+                  <div className="flex items-start justify-between">
+                    <div className="rounded-2xl bg-[#e5f4eb] p-4 text-[#087F5B] shadow-[inset_2px_2px_5px_#cde4d5,inset_-2px_-2px_5px_#ffffff]">
+                      <Icon size={26} strokeWidth={1.8} />
                     </div>
 
-                    <h3 className="mt-9 text-xl font-extrabold tracking-tight sm:text-[22px]">
-                      {service.title}
-                    </h3>
-
-                    <p
-                      className={`mt-4 text-sm leading-7 ${
-                        featured
-                          ? "text-white/80"
-                          : "text-[#657A73]"
-                      }`}
-                    >
-                      {service.short}
-                    </p>
+                    <span className="text-xs font-extrabold text-[#9ab5a6]">
+                      0{index + 1}
+                    </span>
                   </div>
 
-                  <div
-                    className={`mt-7 flex items-center gap-2 border-t pt-5 text-sm font-bold ${
-                      featured
-                        ? "border-white/20 text-white"
-                        : "border-[#DDEAE2] text-[#087F5B]"
-                    }`}
-                  >
+                  <h3 className="mt-8 text-xl font-black leading-snug tracking-[-0.035em]">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-4 flex-1 text-sm leading-7 text-[#627b71]">
+                    {item.desc}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {item.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-[#dcebe2] bg-white/80 px-3 py-1.5 text-[11px] font-semibold text-[#527568]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-7 flex items-center justify-between border-t border-[#dbe9e1] pt-5 text-sm font-extrabold text-[#087F5B]">
                     Explore Service
-                    <ArrowRight
-                      size={17}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    <ArrowUpRight
+                      size={19}
+                      className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
                     />
                   </div>
                 </Link>
@@ -379,80 +517,65 @@ export default function Home() {
       </section>
 
       {/* WHY VILARTECH */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      <section className="bg-white px-6 py-24 sm:py-28">
+        <div className="mx-auto max-w-7xl">
 
           <div className="mb-14 max-w-3xl">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F5B]">
               The Way We Think
             </p>
 
-            <h2 className="mt-5 text-4xl font-extrabold leading-tight tracking-[-0.045em] sm:text-5xl">
+            <h2 className="mt-5 text-4xl font-black leading-tight tracking-[-0.055em] sm:text-5xl">
               Less complexity.
               <span className="block text-[#087F5B]">
                 More possibility.
               </span>
             </h2>
 
-            <p className="mt-6 text-base leading-8 text-[#657A73]">
-              Great solutions aren't defined by how
-              complicated they are. They're defined by
-              how naturally they fit the people and
-              businesses they serve.
+            <p className="mt-6 text-base leading-8 text-[#627b71]">
+              Technology should make business easier, not more
+              complicated. We focus on clear communication,
+              thoughtful design and solutions that serve a
+              real purpose.
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2">
             {strengths.map((item, index) => {
               const Icon = item.icon;
-
-              const dark = index === 0;
-              const wide = item.featured;
 
               return (
                 <article
                   key={item.title}
-                  className={`flex flex-col justify-between rounded-[30px] p-8 sm:p-9 ${
-                    wide ? "lg:col-span-2" : ""
-                  } ${
-                    dark
-                      ? "bg-[#172B29] text-white"
-                      : index === 3
-                      ? "bg-[#E8F5ED]"
-                      : "border border-[#DDEAE2] bg-white"
+                  className={`rounded-[30px] p-8 transition-transform duration-300 hover:-translate-y-1 sm:p-10 ${
+                    index === 0
+                      ? "bg-[#172B29] text-white shadow-[12px_12px_28px_#dce9e2]"
+                      : "border border-[#e0ede5] bg-[#F5FAF7] shadow-[8px_8px_22px_#e1ece5,-8px_-8px_22px_#ffffff]"
                   }`}
                 >
                   <div
                     className={`flex h-14 w-14 items-center justify-center rounded-2xl ${
-                      dark
+                      index === 0
                         ? "bg-white/10 text-[#9ED9B8]"
-                        : "bg-white text-[#087F5B]"
+                        : "bg-[#e5f4eb] text-[#087F5B]"
                     }`}
                   >
-                    <Icon size={27} />
+                    <Icon size={26} />
                   </div>
 
-                  <div className="mt-14">
-                    <h3
-                      className={`font-extrabold leading-tight tracking-tight ${
-                        wide
-                          ? "max-w-xl text-3xl sm:text-4xl"
-                          : "text-2xl"
-                      }`}
-                    >
-                      {item.title}
-                    </h3>
+                  <h3 className="mt-10 text-2xl font-black tracking-tight">
+                    {item.title}
+                  </h3>
 
-                    <p
-                      className={`mt-5 max-w-xl leading-8 ${
-                        dark
-                          ? "text-white/70"
-                          : "text-[#657A73]"
-                      } ${wide ? "text-base" : "text-sm"}`}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
+                  <p
+                    className={`mt-5 max-w-xl text-sm leading-8 ${
+                      index === 0
+                        ? "text-white/70"
+                        : "text-[#627b71]"
+                    }`}
+                  >
+                    {item.description}
+                  </p>
                 </article>
               );
             })}
@@ -460,52 +583,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* OUR PROCESS */}
-      <section className="border-y border-[#DDEAE2] bg-white py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      {/* HOW WE WORK */}
+      <section className="border-y border-[#e1eee6] bg-[#F5FAF7] px-6 py-24 sm:py-28">
+        <div className="mx-auto max-w-7xl">
 
           <div className="mb-14 max-w-3xl">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F5B]">
               How We Work
             </p>
 
-            <h2 className="mt-5 text-4xl font-extrabold tracking-[-0.045em] sm:text-5xl">
+            <h2 className="mt-5 text-4xl font-black tracking-[-0.055em] sm:text-5xl">
               A simple path from
               <span className="text-[#087F5B]">
                 {" "}idea to impact.
               </span>
             </h2>
 
-            <p className="mt-6 text-base leading-8 text-[#657A73]">
-              A collaborative process that brings clarity
-              to every stage of your project.
+            <p className="mt-6 text-base leading-8 text-[#627b71]">
+              A straightforward, collaborative approach that
+              makes it easier to turn your ideas into working
+              solutions.
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-7 md:grid-cols-3">
             {processSteps.map((step) => {
               const StepIcon = step.icon;
 
               return (
                 <article
                   key={step.number}
-                  className="rounded-[28px] border border-[#DDEAE2] bg-[#FAFCFB] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#B9DFC9]"
+                  className={`rounded-[30px] border border-[#e0ede5] bg-[#F5FAF7] p-8 transition-all duration-300 hover:-translate-y-1 ${raised}`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E8F5ED] text-[#087F5B]">
-                      <StepIcon size={23} />
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e5f4eb] text-[#087F5B] shadow-[inset_2px_2px_5px_#cde4d5,inset_-2px_-2px_5px_#ffffff]">
+                      <StepIcon size={25} />
                     </div>
 
-                    <span className="text-4xl font-extrabold text-[#D4E8DB]">
+                    <span className="text-4xl font-black text-[#d1e7d9]">
                       {step.number}
                     </span>
                   </div>
 
-                  <h3 className="mt-10 text-2xl font-extrabold">
+                  <h3 className="mt-10 text-2xl font-black">
                     {step.title}
                   </h3>
 
-                  <p className="mt-4 text-sm leading-7 text-[#657A73]">
+                  <p className="mt-4 text-sm leading-8 text-[#627b71]">
                     {step.description}
                   </p>
                 </article>
@@ -515,33 +639,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LIGHTWEIGHT CONTACT STRIP */}
-      <section className="bg-[#F5FAF7] py-12 sm:py-16">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-7 px-6 sm:flex-row sm:items-center">
+      {/* FINAL CONTACT SECTION */}
+      <section className="bg-white px-6 py-24">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 rounded-[36px] bg-[#e8f5ed] p-10 shadow-[inset_4px_4px_12px_#d4e8da,inset_-4px_-4px_12px_#ffffff] sm:p-16 lg:flex-row lg:items-center">
+
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#087F5B]">
-              Let's Connect
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F5B]">
+              Let's Build Something Great
             </p>
 
-            <h2 className="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">
-              Ready to explore your next idea?
+            <h2 className="mt-5 text-3xl font-black tracking-[-0.05em] sm:text-5xl">
+              Have an idea? Let's make it happen.
             </h2>
 
-            <p className="mt-3 max-w-xl text-sm leading-7 text-[#657A73]">
-              Share what you're working towards.
-              We'd love to hear about it.
+            <p className="mt-5 max-w-xl leading-8 text-[#627b71]">
+              Starting a new business, improving your website
+              or looking for smarter technology? Tell us what
+              you have in mind and let's explore the possibilities.
             </p>
           </div>
 
           <Link
             to="/contact"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[#087F5B] px-7 py-3.5 text-sm font-bold text-[#087F5B] transition-colors hover:bg-[#087F5B] hover:text-white"
+            className="inline-flex shrink-0 items-center gap-3 rounded-full bg-[#087F5B] px-8 py-5 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#066a4c]"
           >
-            Get in Touch
-            <ArrowUpRight size={18} />
+            Start a Project
+            <ArrowUpRight size={20} />
           </Link>
         </div>
       </section>
+
+      {/* CAROUSEL ANIMATION */}
+      <style>
+        {`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(12px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            * {
+              animation-duration: 0.01ms !important;
+            }
+          }
+        `}
+      </style>
     </main>
   );
 }
